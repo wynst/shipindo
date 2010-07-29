@@ -2,37 +2,76 @@
 
 == Description
 
-Describe your gem here ... 
+Library that scrapes rates from various Indonesian shipping carriers web 1.0 sites.
+API is similar in those of ActiveShipping.
+
+== Supported Shipping Carriers
+
+* JNE -- http://jne.co.id
+* more if you send patch
 
 == Installation
 
-    sudo gem install shipindo
+    gem install shipindo
 
 == Usage
 
+    # use them all
     require 'shipindo'
 
-== License
+    Shipindo.find_rates(
+        :origin       => "MEDAN",
+        :destination  => "TANGERANG",
+        :weight       => 2)
 
-Copyright (c) <year> <copyright holders>
+    => {
+              :origin => "MEDAN",
+         :destination => "TANGERANG",
+              :weight => 2,
+             :carrier => "jne",
+         :origin_code => "TUVTMTAwMDBK",
+    :destination_code => "VEdSMTAwMDBK",
+                :from => "MEDAN",
+                  :to => "TANGERANG",
+            :response => {
+              :rates => [
+            [0] {
+                :service_name => "SS",
+                :service_type => "Dokumen/Paket",
+                        :rate => 330000.0
+            },
+            [1] {
+                :service_name => "YES",
+                :service_type => "Dokumen/Paket",
+                        :rate => 39000.0
+            },
+            [2] {
+                :service_name => "REG",
+                :service_type => "Dokumen/Paket",
+                        :rate => 32000.0
+            },
+            [3] {
+                :service_name => "OKE",
+                :service_type => "Dokumen/Paket",
+                        :rate => 30000.0
+            }
+        ],
+             :origin => "MEDAN",
+        :destination => "TANGERANG",
+             :weight => "2"
+    }
+  }
 
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
+    # or only a single carrier
+    require 'shipindo/carriers/jne'
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+    jne = Shipindo::Carrier::Jne.new
+    jne.find_rates(
+      :origin      => "JAKARTA",
+      :destination => "MEDAN",
+      :weight      => 2)
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+== Copyright
+
+See MIT-LICENSE for details.
+
