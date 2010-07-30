@@ -19,8 +19,14 @@ module Shipindo::Carrier
 
     def find_rates(options)
       if options[:origin] && options[:destination]
-        options[:origin_code]      = list_city(options[:origin]).first[:code]
-        options[:destination_code] = list_city(options[:destination]).first[:code]
+
+        unless options[:origin_code]
+          options[:origin_code] = list_city(options[:origin]).first[:code]
+        end
+
+        unless options[:destination_code]
+          options[:destination_code] = list_city(options[:destination]).first[:code]
+        end
         # another jne server flunk, response city name is from request parameters,
         # if there isn't any eg. using only code if cities, then it's displayed as empty.
         options[:from] = options[:origin]
