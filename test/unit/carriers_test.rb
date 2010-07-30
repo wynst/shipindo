@@ -25,6 +25,11 @@ class CarriersTest < Test::Unit::TestCase
       assert_equal 330_000,     data[:response][:rates][0][:rate]
     end
 
+    should "find city" do
+      assert_equal("UERHMTAwMDBK", Shipindo.find_city(:name => 'padang')[:code])
+      assert_nil(Shipindo.find_city(:name => 'jogjakarta'))
+    end
+
   end
 
 end
